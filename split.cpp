@@ -11,13 +11,34 @@ the function below should be the only one in this file.
 */
 
 #include "split.h"
+#include <cstddef>
 
-/* Add a prototype for a helper function here if you need */
-
-void split(Node*& in, Node*& odds, Node*& evens)
-{
-  /* Add code here */
-// WRITE YOUR CODE HERE
+void split(Node*& in, Node*& odds, Node*& evens) {
+    // Base case: if input list is empty, nothing to do
+    if (in == NULL) {
+        return;
+    }
+    
+    // Store current node we're processing
+    Node* current = in;
+    
+    // Move input pointer to next node
+    in = in->next;
+    
+    // Disconnect current node from original list
+    current->next = NULL;
+    
+    // Check if current node's value is odd or even
+    if (current->value % 2 == 1) {
+        // Odd value: add to front of odds list
+        current->next = odds;
+        odds = current;
+    } else {
+        // Even value: add to front of evens list
+        current->next = evens;
+        evens = current;
+    }
+    
+    // Recursively process the rest of the list
+    split(in, odds, evens);
 }
-
-/* If you needed a helper function, write it here */
